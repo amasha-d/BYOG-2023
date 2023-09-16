@@ -756,12 +756,28 @@ PlayerSettings:
   webGLTemplate: APPLICATION:Default
   webGLAnalyzeBuildSize: 0
   webGLUseEmbeddedResources: 0
-  webGLCompressionFormat: 0
+  webGLCompressionFormat: 1
   webGLWasmArithmeticExceptions: 0
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Android: FG_MPRO
+    EmbeddedLinux: FG_MPRO
+    GameCoreScarlett: FG_MPRO
+    GameCoreXboxOne: FG_MPRO
+    LinuxHeadlessSimulation: FG_MPRO
+    Lumin: FG_MPRO
+    Nintendo Switch: FG_MPRO
+    PS4: FG_MPRO
+    PS5: FG_MPRO
+    Stadia: FG_MPRO
+    Standalone: FG_MPRO
+    WebGL: FG_MPRO
+    Windows Store Apps: FG_MPRO
+    XboxOne: FG_MPRO
+    iPhone: FG_MPRO
+    tvOS: FG_MPRO
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
