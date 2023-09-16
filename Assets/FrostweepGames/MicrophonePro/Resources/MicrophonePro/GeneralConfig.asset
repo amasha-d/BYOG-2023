@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 4.0.0
   showWelcomeDialogAtStartup: 0
-  usePostProcessBuildInject: 1
+  usePostProcessBuildInject: 0
