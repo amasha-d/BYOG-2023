@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 3.4f;
     public float jumpHeight = 6.5f;
     public float gravityScale = 1.5f;
-    public Camera mainCamera;
+    //[SerializeField] private float m_JumpForce = 400f;
+    //public Camera mainCamera;
 
     bool facingRight = true;
     float moveDirection = 0;
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D r2d;
     BoxCollider2D mainCollider;
     Transform t;
+    /[SerializeField] private CameraController cameraFlip;
     void Start()
     {
         t = transform;
@@ -26,10 +28,10 @@ public class PlayerController : MonoBehaviour
         r2d.gravityScale = gravityScale;
         facingRight = t.localScale.x > 0;
 
-        if (mainCamera)
+        /*if (mainCamera)
         {
             cameraPos = mainCamera.transform.position;
-        }
+        }*/
     }
 
     // Update is called once per frame
@@ -55,25 +57,29 @@ public class PlayerController : MonoBehaviour
             {
                 facingRight = true;
                 t.localScale = new Vector3(Mathf.Abs(t.localScale.x), t.localScale.y, transform.localScale.z);
+                //Flip();
             }
             if (moveDirection < 0 && facingRight)
             {
                 facingRight = false;
-                t.localScale = new Vector3(-Mathf.Abs(t.localScale.x), t.localScale.y, t.localScale.z);
+               t.localScale = new Vector3(-Mathf.Abs(t.localScale.x), t.localScale.y, t.localScale.z);
+                //Flip();
             }
         }
 
         // Jumping
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
+           // r2d.AddForce(new Vector2(0f, m_JumpForce));
             r2d.velocity = new Vector2(r2d.velocity.x, jumpHeight);
         }
 
         // Camera follow
-        if (mainCamera)
+        /*if (mainCamera)
         {
             mainCamera.transform.position = new Vector3(t.position.x, cameraPos.y, cameraPos.z);
-        }
+        }*/
+
     }
     void FixedUpdate()
     {
@@ -98,9 +104,20 @@ public class PlayerController : MonoBehaviour
 
         // Apply movement velocity
         r2d.velocity = new Vector2((moveDirection) * maxSpeed, r2d.velocity.y);
-
         // Simple debug
         Debug.DrawLine(groundCheckPos, groundCheckPos - new Vector3(0, colliderRadius, 0), isGrounded ? Color.green : Color.red);
         Debug.DrawLine(groundCheckPos, groundCheckPos - new Vector3(colliderRadius, 0, 0), isGrounded ? Color.green : Color.red);
     }
+   /* private void Flip()
+    {
+        // Switch the way the player is labelled as facing.
+        facingRight = !facingRight;
+
+        transform.Rotate(0, 180f, 0);
+    
+        //Flip the camera offset
+        Vector3 flipOffset = cameraFlip.offset;
+        flipOffset.x *= -1;
+        cameraFlip.offset = flipOffset;
+    }*/
 }
