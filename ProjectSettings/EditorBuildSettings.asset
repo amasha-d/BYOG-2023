@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/EndingScene.unity
     guid: 3962324c00636f5459df2d1d6941437f
+  - enabled: 0
+    path: Assets/FrostweepGames/MicrophonePro/Examples/Basic_Example/Example.unity
+    guid: efb284959345ad546aefc9ce6b55dd6c
   m_configObjects: {}
