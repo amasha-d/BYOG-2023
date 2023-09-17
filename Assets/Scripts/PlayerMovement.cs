@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             jump = true;
+            anim.SetBool("isJumping", true);
         }
 
     }
@@ -101,6 +102,10 @@ public class PlayerMovement : MonoBehaviour
     void ReloadScene()
     {
         SceneManager.LoadScene(1);
+    }
+    public void OnLanding()
+    {
+        anim.SetBool("isJumping", false);
     }
 }
 
