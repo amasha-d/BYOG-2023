@@ -6,7 +6,7 @@ public class MovePlatformPitch : MonoBehaviour
 {
     //public Transform AudioAnalyser;
     public Vector2 ppos;
-    public PitchAnalyzer analyzer;
+    public PitchAnalyzer audioAnalyse;
     public float divisor;
     public float midLevel;
     public bool isHorizontal;
@@ -23,6 +23,7 @@ public class MovePlatformPitch : MonoBehaviour
 
     void Start()
     {
+        midLevel = audioAnalyse.midLevel;
         rb2D = gameObject.AddComponent<Rigidbody2D>();
         rb2D.gravityScale = 0;
         rb2D.mass = mass;
@@ -32,10 +33,10 @@ public class MovePlatformPitch : MonoBehaviour
         initialPos = transform.position;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        GameObject theCamera = GameObject.Find("Main Camera");
-        PitchAnalyzer audioAnalyse = theCamera.GetComponent<PitchAnalyzer>();
+       // GameObject theCamera = GameObject.Find("Main Camera");
+       // PitchAnalyzer audioAnalyse = theCamera.GetComponent<PitchAnalyzer>();
         Vector3 distanceTravelled = transform.position - initialPos;
         Debug.Log(distanceTravelled);
 
@@ -70,6 +71,8 @@ public class MovePlatformPitch : MonoBehaviour
 
         }
     }
+
+    
 
     //transform.position = ppos;
 }
