@@ -10,6 +10,7 @@ TagManager:
   - L2
   - L3
   - Seed
+  - background
   layers:
   - Default
   - TransparentFX

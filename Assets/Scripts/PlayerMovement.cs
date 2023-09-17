@@ -69,6 +69,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.tag == "Death")
+        {
+            gameManager.GameLose();
+        }
         if (collision.gameObject.tag == "Seed")
         {
             //gameManager.seedCollected = true;
