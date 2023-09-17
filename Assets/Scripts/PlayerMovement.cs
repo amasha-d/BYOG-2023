@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
     public PlayerController controller;
+    public Animator anim;
     public GameManager gameManager;
+
     public float runSpeed = 40f;
     public bool canMove = true;
     bool jump = false;
@@ -27,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        anim.SetFloat("speed", Mathf.Abs(horizontalMove));
         if (canMove)
         {
             controller.Move(horizontalMove * Time.fixedDeltaTime, false, jump);
@@ -49,11 +52,11 @@ public class PlayerMovement : MonoBehaviour
         {
             gameManager.GameLose();
         }
-        if(collision.gameObject.tag == "Seed")
+        if (collision.gameObject.tag == "Seed")
         {
             gameManager.seedCollected = true;
         }
-        if(collision.gameObject.tag == "L1")
+        if (collision.gameObject.tag == "L1")
         {
             gameManager.ChooseLevel(1);
         }
