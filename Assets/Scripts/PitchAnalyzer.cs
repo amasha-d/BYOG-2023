@@ -4,23 +4,35 @@ using System.Linq;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Audio;
-//using Microphone = FrostweepGames.MicrophonePro.Microphone;
+using Microphone = FrostweepGames.MicrophonePro.Microphone;
+using UnityEngine.UI;
+using UnityEditor.PackageManager.UI;
+using UnityEngine.Profiling;
 //using FrostweepGames.MicrophonePro;
 
 public class PitchAnalyzer : MonoBehaviour
 {
     //public AudioMixerGroup mixerGroupMicrophone; // Create an audio mixer group for the microphone
-    public float sensitivity = 1000.0f; // Adjust this sensitivity value to fit your needs
+    //public float sensitivity = 1000.0f; // Adjust this sensitivity value to fit your needs
     public float loudnessThreshold = 0.1f; // Adjust this threshold value to filter out background noise
     public TextMeshProUGUI pitchText; // Text to display the pitch
     public TextMeshProUGUI deviceNameText; // Text to display the name
-    public float smoothingFactor = 0.2f; // Adjust this factor for smoothing (0.0f for no smoothing, 1.0f for no change)
+    //public float smoothingFactor = 0.2f; // Adjust this factor for smoothing (0.0f for no smoothing, 1.0f for no change)
+    public bool micActive = false;
 
     public float smoothedPitch = 0.0f;
+    public Slider slider;
+    public float midLevel = 500;
 
     private AudioSource audioSource;
     private string selectedMicrophone;
     string[] microphones;
+
+
+    public int smoothingWindowSize = 10; // Adjust the window size for smoothing
+
+    private Queue<float> pitchBuffer = new Queue<float>();
+
 
 
     void Start()
@@ -56,7 +68,9 @@ public class PitchAnalyzer : MonoBehaviour
 #if UNITY_WEBGL && !UNITY_EDITOR
 			// for webgl we use native audio speaker instead unity audio source due to limitation of unity audio engine
             selectedMicrophone = microphones[0];
-            Microphone.Start(Microphone.devices[0], true, 1, 44100, true);
+            audioSource.clip = Microphone.Start(Microphone.devices[0], true, 1, 44100, true);
+            audioSource.loop = true;
+            audioSource.Play();
 #else
             selectedMicrophone = microphones[0];
             audioSource.clip = Microphone.Start(Microphone.devices[0], true, 1, 44100);
@@ -75,19 +89,41 @@ public class PitchAnalyzer : MonoBehaviour
     }
 
 
+    public void SliderValue()
+    {
+        slider.maxValue = midLevel * 2;
+        slider.minValue = 10;
+        if(smoothedPitch == midLevel)
+        {
+            slider.value = midLevel;
+        }
+        else if(smoothedPitch > midLevel)
+        {
+            slider.value = smoothedPitch;
+        }
+        else
+        {
+            slider.value = midLevel - smoothedPitch;
+        }
+    }
 
-        
+    private void Update()
+    {
+        SliderValue();
+    }
+
 
 
     IEnumerator UpdateFunc()
     {
         // InitializeMicrophone();
         //microphones = Microphone.devices;
-        while (true)
+        
+        while (Microphone.devices.Length > 0)
         {
             deviceNameText.text = Microphone.devices[0];
 
-            if (Microphone.IsRecording(Microphone.devices[0]))
+            //if (Microphone.devices.Length > 0)
             {
                 float[] samples = new float[audioSource.clip.samples];
                 //float[] samples = new float[128];
@@ -97,6 +133,7 @@ public class PitchAnalyzer : MonoBehaviour
 
                 if (loudness > loudnessThreshold)
                 {
+                    micActive = true;
                     float[] spectrum = new float[1024];
                     audioSource.GetSpectrumData(spectrum, 0, FFTWindow.BlackmanHarris);
 
@@ -114,8 +151,16 @@ public class PitchAnalyzer : MonoBehaviour
 
                     float pitch = maxFrequency * (AudioSettings.outputSampleRate / 2) / spectrum.Length;
 
-                    // Apply exponential moving average filter
-                    smoothedPitch = (pitch * smoothingFactor) + (smoothedPitch * (1.0f - smoothingFactor));
+
+                    pitchBuffer.Enqueue(pitch);
+                    if (pitchBuffer.Count > smoothingWindowSize)
+                    {
+                        pitchBuffer.Dequeue();
+                    }
+                    smoothedPitch = pitchBuffer.Average();
+
+                    // Apply exponential moving average filter (pitch * smoothingFactor) + (smoothedPitch * (1.0f - smoothingFactor));
+                    //smoothedPitch = pitch;
 
                     //Debug.Log("Smoothed Pitch: " + smoothedPitch.ToString("F2") + " Hz");
                     pitchText.text = "Smoothed Pitch: " + smoothedPitch.ToString("F2") + " Hz";
@@ -124,14 +169,17 @@ public class PitchAnalyzer : MonoBehaviour
                 else
                 {
                     smoothedPitch = 0;
-                    //Debug.Log("No sound detected");
+                    pitchBuffer.Clear();
+                    micActive = false;
                     pitchText.text = "No sound detected";
                 }
             }
+            
             yield return null;
         }
-        
-        
+
+        deviceNameText.text = "out of while";
+        pitchText.text = "out of while";
     }
 
 

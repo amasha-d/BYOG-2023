@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
     public PlayerController controller;
     public Animator anim;
+    public GameManager gameManager;
+
     public float runSpeed = 40f;
     public bool canMove = true;
     bool jump = false;
@@ -44,21 +46,44 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.tag == "FinishLine")
         {
             canMove = false;
-            gameWinUI.SetActive(true);
-            Debug.Log("finish line reached");
+            gameManager.FinishLine();
+        }
+        if (collision.gameObject.tag == "Death")
+        {
+            gameManager.GameLose();
+        }
+        if (collision.gameObject.tag == "Seed")
+        {
+            gameManager.seedCollected = true;
+        }
+        if (collision.gameObject.tag == "L1")
+        {
+            gameManager.ChooseLevel(1);
+        }
+        if (collision.gameObject.tag == "L2")
+        {
+            gameManager.ChooseLevel(2);
+        }
+        if (collision.gameObject.tag == "L3")
+        {
+            gameManager.ChooseLevel(3);
         }
     }
-   void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Death")
-        {
-           
-            Invoke("ReloadScene", reloadDelay);
-            Destroy(this.gameObject);
-            //Invoke("ReloadScene", reloadDelay);
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "L1")
+        {
+            gameManager.ChooseLevel(1);
         }
-        
+        if (collision.gameObject.tag == "L2")
+        {
+            gameManager.ChooseLevel(2);
+        }
+        if (collision.gameObject.tag == "L3")
+        {
+            gameManager.ChooseLevel(3);
+        }
     }
     void ReloadScene()
     {
