@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,11 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     public GameObject nextLevelUI;
     public GameObject gameLoseUI;
+    public GameObject Player;
+
+    [Header("finish line")]
+    public GameObject entryGate;
+    public GameObject treeLight;
     public bool seedCollected;
     void Start()
     {
@@ -45,6 +51,7 @@ public class GameManager : MonoBehaviour
     {
         if(seedCollected)
         {
+            //GameObject.Destroy(Player);
             nextLevelUI.SetActive(true);
         }
         else
@@ -56,7 +63,15 @@ public class GameManager : MonoBehaviour
 
     public void GameLose()
     {
+        GameObject.Destroy(Player);
         gameLoseUI.SetActive(true);
+    }
+
+    public void CollectSeed()
+    {
+        seedCollected = true;
+        entryGate.SetActive(false);
+        treeLight.SetActive(true);
     }
 
 

@@ -52,10 +52,7 @@ public class PlayerMovement : MonoBehaviour
         {
             gameManager.GameLose();
         }
-        if (collision.gameObject.tag == "Seed")
-        {
-            gameManager.seedCollected = true;
-        }
+        
         if (collision.gameObject.tag == "L1")
         {
             gameManager.ChooseLevel(1);
@@ -72,6 +69,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.tag == "Death")
+        {
+            gameManager.GameLose();
+        }
+        if (collision.gameObject.tag == "Seed")
+        {
+            //gameManager.seedCollected = true;
+            gameManager.CollectSeed();
+            GameObject.Destroy(collision.gameObject);
+            Debug.Log("seed collected");
+        }
+        if (collision.gameObject.tag == "FinishLine")
+        {
+            //canMove = false;
+            gameManager.FinishLine();
+        }
         if (collision.gameObject.tag == "L1")
         {
             gameManager.ChooseLevel(1);
