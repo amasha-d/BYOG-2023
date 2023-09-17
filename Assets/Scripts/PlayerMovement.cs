@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
     public PlayerController controller;
+    public Animator anim;
     public float runSpeed = 40f;
     public bool canMove = true;
     bool jump = false;
@@ -26,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        anim.SetFloat("speed", Mathf.Abs(horizontalMove));
         if (canMove)
         {
             controller.Move(horizontalMove * Time.fixedDeltaTime, false, jump);
