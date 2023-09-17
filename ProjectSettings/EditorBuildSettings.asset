@@ -5,12 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-<<<<<<< Updated upstream
-=======
   - enabled: 1
->>>>>>> Stashed changes
     path: Assets/Scenes/LandingScene.unity
     guid: 2a6a82db7473eaa43b71c19ed2f38b22
+  - enabled: 1
+    path: Assets/Scenes/L 0.unity
+    guid: 20c178adea1dbba4e92751f788598c97
   - enabled: 1
     path: Assets/Scenes/L 1.unity
     guid: 2cda990e2423bbf4892e6590ba056729
@@ -21,9 +21,45 @@ EditorBuildSettings:
     path: Assets/Scenes/EndingScene.unity
     guid: 3962324c00636f5459df2d1d6941437f
   - enabled: 0
-    path: Assets/FrostweepGames/MicrophonePro/Examples/Basic_Example/Example.unity
-    guid: efb284959345ad546aefc9ce6b55dd6c
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/FrostweepGames/MicrophonePro/Examples/LeapSync_Example/LeapSync_Example.unity
-    guid: 8b654c21cf2f1494b9e7b3c13665d384
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}

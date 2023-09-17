@@ -802,6 +802,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 495897a411797fd4c9a0da070f68c87c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextLevelUI: {fileID: 0}
+  gameLoseUI: {fileID: 0}
+  seedCollected: 0
 --- !u!4 &934939478
 Transform:
   m_ObjectHideFlags: 0

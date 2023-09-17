@@ -13,7 +13,7 @@ using UnityEngine.Profiling;
 public class PitchAnalyzer : MonoBehaviour
 {
     //public AudioMixerGroup mixerGroupMicrophone; // Create an audio mixer group for the microphone
-    public float sensitivity = 1000.0f; // Adjust this sensitivity value to fit your needs
+    //public float sensitivity = 1000.0f; // Adjust this sensitivity value to fit your needs
     public float loudnessThreshold = 0.1f; // Adjust this threshold value to filter out background noise
     public TextMeshProUGUI pitchText; // Text to display the pitch
     public TextMeshProUGUI deviceNameText; // Text to display the name
@@ -91,6 +91,8 @@ public class PitchAnalyzer : MonoBehaviour
 
     public void SliderValue()
     {
+        slider.maxValue = midLevel * 2;
+        slider.minValue = 10;
         if(smoothedPitch == midLevel)
         {
             slider.value = midLevel;
